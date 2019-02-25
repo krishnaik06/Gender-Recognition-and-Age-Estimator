@@ -8,17 +8,7 @@ import numpy as np
 import argparse
 from wide_resnet import WideResNet
 from keras.utils.data_utils import get_file
-import time
 
-malelst=[]
-femalelst=[]
-maleagelst=[]
-femaleagelst=[]
-start_t=0.0
-flag=False
-start_t2=0.0
-elapsed_time1=0.0
-elapsed_time2=0.0
 
 class FaceCV(object):
     
@@ -128,33 +118,10 @@ class FaceCV(object):
                 for i, face in enumerate(faces):
                     label = "{}, {}".format(int(predicted_ages[i]),
                                             "F" if predicted_genders[i][0] > 0.5 else "M")
-                    if predicted_genders[i][0] > 0.5:
-                        start_t = time.time()
-                        femaleagelst.append(int(predicted_ages[i]))
-                    else:
-                        start_t2=time.time()
-                        flag=True
-                        maleagelst.append(int(predicted_ages[i]))
-                
-                  
-                        
                     
                     self.draw_label(frame, (face[0], face[1]), label)
             else:
                 print('No faces')
-                if(start_t2!=0.0):
-                    if flag:
-                        elapsed_time1=time.time()-start_t2
-                        malelst.append(elapsed_time1)
-                        flag=False
-                elif (start_t!=0):
-                    elapsed_time2=time.time()-start_t
-                    femalelst.append(elapsed_time2)
-            
-                
-                
-                
-    
 
             cv2.imshow('Keras Faces', frame)
             if cv2.waitKey(5) == 27:  # ESC key press
@@ -191,33 +158,6 @@ if __name__ == "__main__":
     
 
 
-import matplotlib.pyplot as plt
-
-plt.subplot(3,2,1)
-plt.hist(malelst,bins=10)
-plt.xlabel('Time')
-plt.ylabel('No of people')
-plt.title('Average Time Seen for Male')
-
-
-plt.subplot(3,2,2)
-plt.hist(femalelst,bins=10)
-plt.xlabel('Time')
-plt.ylabel('No of people')
-plt.title('Average Time Seen for Female')
-plt.show()
-
-plt.subplot(3,2,5)
-plt.hist(maleagelst,bins=10)
-plt.xlabel('Various Age')
-plt.ylabel('No of people')
-plt.title('Average Age Seen for Male')
-plt.subplot(3,2,6)
-plt.hist(femalelst,bins=10)
-plt.xlabel('Various Age')
-plt.ylabel('No of people')
-plt.title('Average Age Seen for Female')
-plt.show()
 
 
 
