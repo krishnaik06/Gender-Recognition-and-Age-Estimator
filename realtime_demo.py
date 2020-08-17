@@ -9,6 +9,8 @@ import argparse
 from wide_resnet import WideResNet
 from keras.utils.data_utils import get_file
 
+import os, random
+
 
 class FaceCV(object):
     
@@ -118,6 +120,75 @@ class FaceCV(object):
                 for i, face in enumerate(faces):
                     label = "{}, {}".format(int(predicted_ages[i]),
                                             "F" if predicted_genders[i][0] > 0.5 else "M")
+                    print(int(predicted_ages[i]),predicted_genders[i][0])
+                    if predicted_genders[i][0] < 0.5 and ((int(predicted_ages[i])>25) and (int(predicted_ages[i])<30)) :
+                        print("Hello")
+                        filename=random.choice(os.listdir("25-30/"))
+                        cap = cv2.VideoCapture("25-30/"+filename)
+
+                        # Read until video is completed
+                        while(cap.isOpened()):
+                          # Capture frame-by-frame
+                          ret, frame1 = cap.read()
+                          if ret == True:
+                        
+                            # Display the resulting frame
+                            cv2.imshow('Frame',frame1)
+                            # Press Q on keyboard to  exit
+                            if cv2.waitKey(25) & 0xFF == ord('q'):
+                              break
+            
+                          else:
+                              break
+                    elif predicted_genders[i][0] < 0.5 and ((int(predicted_ages[i])>30) and (int(predicted_ages[i])<35)) :
+                        print("Hello")
+                        filename=random.choice(os.listdir("30-35/"))
+                        cap = cv2.VideoCapture("30-35/"+filename)
+
+                        # Read until video is completed
+                        while(cap.isOpened()):
+                          # Capture frame-by-frame
+                          ret, frame1 = cap.read()
+                          if ret == True:
+                        
+                            # Display the resulting frame
+                            cv2.imshow('Frame',frame1)
+                            # Press Q on keyboard to  exit
+                            if cv2.waitKey(25) & 0xFF == ord('q'):
+                              break
+            
+                          else:
+                              break 
+                    elif predicted_genders[i][0] > 0.5 and ((int(predicted_ages[i])>25) and (int(predicted_ages[i])<30)) :
+                        print("Hello")
+                        filename=random.choice(os.listdir("F25-30/"))
+                        cap = cv2.VideoCapture("F25-30/"+filename)
+
+                        # Read until video is completed
+                        while(cap.isOpened()):
+                          # Capture frame-by-frame
+                          ret, frame1 = cap.read()
+                          if ret == True:
+                        
+                            # Display the resulting frame
+                            cv2.imshow('Frame',frame1)
+                            # Press Q on keyboard to  exit
+                            if cv2.waitKey(25) & 0xFF == ord('q'):
+                              break
+            
+                          else:
+                              break 
+                    
+                   
+                                        # When everything done, release the video capture object
+                        cap.release()
+                        
+                        # Closes all the frames
+                        cv2.destroyAllWindows()
+                        
+            
+                        
+                        
                     
                     self.draw_label(frame, (face[0], face[1]), label)
             else:
